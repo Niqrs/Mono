@@ -1,21 +1,25 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+    kotlin("kapt")
 }
-
 android {
-    namespace = "com.niqr.mono"
-    compileSdk = 33
+    namespace = ProjectConfig.namespace("mono")
+    compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
-        applicationId = "com.niqr.mono"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = ProjectConfig.applicationId
+        minSdk = ProjectConfig.minSdk
+        targetSdk = ProjectConfig.targetSdk
+        versionCode = ProjectConfig.versionCode
+        versionName = ProjectConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -24,24 +28,19 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     buildFeatures {
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0"
+    compileOptions {
+        sourceCompatibility = ProjectConfig.javaVersion
+        targetCompatibility = ProjectConfig.javaVersion
     }
-
+    kotlinOptions {
+        jvmTarget = ProjectConfig.jvmTarget
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = ProjectConfig.kotlinCompilerExtensionVersion
+    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -50,18 +49,33 @@ android {
 }
 
 dependencies {
-    val compose_version = "1.2.0"
+    // Import the BoM for the Firebase platform
+    implementation(platform(Dependencies.Firebase.bom)) //TODO: manage it
+    implementation(Dependencies.Firebase.auth)
+    implementation(Dependencies.Firebase.firestore)
+    implementation(Dependencies.PlayServices.auth)
+    implementation(Dependencies.Firebase.storage)
+    implementation(Dependencies.Firebase.messaging)
+    implementation(Dependencies.Firebase.analytics)
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.compose.ui:ui:$compose_version")
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha11")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose_version")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+
+    implementation(Dependencies.Android.coreKtx)
+    implementation(Dependencies.Android.activityCompose)
+    implementation(Dependencies.Android.preference)
+
+    implementation(Dependencies.Compose.ui)
+    implementation(Dependencies.Compose.tooling)
+    implementation(Dependencies.Compose.material3)
+    implementation(Dependencies.Compose.navigation)
+
+    implementation(Dependencies.Hilt.android)
+    kapt(Dependencies.Hilt.androidCompiler)
+
+    testImplementation(Dependencies.Testing.junit4)
+    androidTestImplementation(Dependencies.Testing.junit4)
+    androidTestImplementation(Dependencies.Testing.junitAndroidExt)
+}
+
+kapt {
+    correctErrorTypes = true
 }
