@@ -35,8 +35,8 @@ android {
         sourceCompatibility = ProjectConfig.javaVersion
         targetCompatibility = ProjectConfig.javaVersion
     }
-    kotlinOptions {
-        jvmTarget = ProjectConfig.jvmTarget
+    kotlin {
+        jvmToolchain(ProjectConfig.jvmTarget.toInt())
     }
     composeOptions {
         kotlinCompilerExtensionVersion = ProjectConfig.kotlinCompilerExtensionVersion
@@ -50,7 +50,7 @@ android {
 
 dependencies {
     // Import the BoM for the Firebase platform
-    implementation(platform(Dependencies.Firebase.bom)) //TODO: manage it
+    implementation(platform(Dependencies.Firebase.bom))
     implementation(Dependencies.Firebase.auth)
     implementation(Dependencies.Firebase.firestore)
     implementation(Dependencies.PlayServices.auth)

@@ -1,11 +1,11 @@
 object Dependencies {
     object Kotlin {
-        const val ver = "1.7.21"
+        const val ver = "1.8.10"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$ver"
     }
 
     object Android {
-        private const val gradlePluginVersion = "7.4.0"
+        private const val gradlePluginVersion = "7.4.2"
         const val gradlePlugin = "com.android.tools.build:gradle:$gradlePluginVersion"
 
         private const val activityComposeVersion = "1.6.1"

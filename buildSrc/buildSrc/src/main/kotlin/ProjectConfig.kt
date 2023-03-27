@@ -10,8 +10,8 @@ object ProjectConfig {
     const val versionCode = 1
     const val versionName = "1.0"
 
-    const val kotlinCompilerExtensionVersion = "1.4.0-alpha02"
+    const val kotlinCompilerExtensionVersion = "1.4.4"
 
-    val javaVersion = JavaVersion.VERSION_11
-    const val jvmTarget = "11"
+    val javaVersion = JavaVersion.VERSION_17
+    const val jvmTarget = "17"
 }

@@ -2,7 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-repositories { //TODO: PluginManagement?
+repositories {
     google()
     mavenCentral()
     gradlePluginPortal()
