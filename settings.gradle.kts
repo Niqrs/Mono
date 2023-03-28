@@ -17,3 +17,7 @@ dependencyResolutionManagement {
 rootProject.name = "Mono"
 
 include(":app")
+
+include(":core:data")
+include(":core:ui")
+include(":core:utils")
