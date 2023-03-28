@@ -21,3 +21,7 @@ include(":app")
 include(":core:data")
 include(":core:ui")
 include(":core:utils")
+
+include(":auth:data")
+include(":auth:domain")
+include(":auth:ui")
