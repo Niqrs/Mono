@@ -25,3 +25,7 @@ include(":core:utils")
 include(":auth:data")
 include(":auth:domain")
 include(":auth:ui")
+
+include(":tasks:data")
+include(":tasks:ui")
+include(":tasks:domain")
