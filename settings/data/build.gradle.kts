@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace("tasks.data")
+    namespace = ProjectConfig.namespace("setting.data")
 }
 
 dependencies {
     implementation(project(":core:data"))
 
-    implementation(project(":tasks:domain"))
+    implementation(project(":settings:domain"))
 
     implementation(platform(Dependencies.Firebase.bom))
     implementation(Dependencies.Firebase.auth)

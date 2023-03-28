@@ -29,3 +29,7 @@ include(":auth:ui")
 include(":tasks:data")
 include(":tasks:ui")
 include(":tasks:domain")
+
+include(":settings:data")
+include(":settings:ui")
+include(":settings:domain")
