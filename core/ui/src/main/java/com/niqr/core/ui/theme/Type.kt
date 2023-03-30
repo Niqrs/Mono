@@ -1,4 +1,4 @@
-package com.niqr.mono.ui.theme
+package com.niqr.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

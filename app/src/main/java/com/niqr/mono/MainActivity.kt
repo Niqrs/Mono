@@ -3,7 +3,7 @@ package com.niqr.mono
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.niqr.mono.ui.theme.MonoTheme
+import com.niqr.core.ui.theme.MonoTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
