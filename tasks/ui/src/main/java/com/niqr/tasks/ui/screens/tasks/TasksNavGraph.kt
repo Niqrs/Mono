@@ -1,5 +1,6 @@
 package com.niqr.tasks.ui.screens.tasks
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -15,8 +16,11 @@ internal fun NavGraphBuilder.tasksScreen(
     onSettingsClick: () -> Unit
 ) {
     composable(TasksScreenRoutePattern) {
-//        val viewModel: TasksViewModel = hiltViewModel()
+        val viewModel: TasksViewModel = hiltViewModel()
         TasksScreen(
+            uiState = viewModel.uiState,
+            uiEvent = viewModel.uiEvent,
+            onAction = viewModel::onAction,
             onSignOut = onSignOut,
             onSettingsClick = onSettingsClick
         )
