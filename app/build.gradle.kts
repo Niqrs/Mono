@@ -50,8 +50,13 @@ android {
 
 dependencies {
     implementation(project(":auth:ui"))
+    implementation(project(":auth:data"))
+
     implementation(project(":tasks:ui"))
+    implementation(project(":tasks:data"))
+
     implementation(project(":settings:ui"))
+    implementation(project(":settings:data"))
 
     // Import the BoM for the Firebase platform
     implementation(platform(Dependencies.Firebase.bom))
