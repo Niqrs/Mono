@@ -1,8 +1,8 @@
 package com.niqr.auth.data
 
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.niqr.auth.domain.AuthRepository
@@ -12,15 +12,16 @@ import com.niqr.core.data.FirebaseConstants.EMAIL
 import com.niqr.core.data.FirebaseConstants.PHOTO_URL
 import com.niqr.core.data.FirebaseConstants.USERS
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-internal class AuthRepositoryImpl(
+internal class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore
 ): AuthRepository {
     override val isAuthenticated: Boolean
         get() = auth.currentUser != null
 
-    override suspend fun authWithGoogle(authCredential: GoogleAuthCredential): Boolean {
+    override suspend fun authWithGoogle(authCredential: AuthCredential): Boolean {
         return try {
             val authResult = auth.signInWithCredential(authCredential).await()
             val isNewUser = authResult.additionalUserInfo?.isNewUser ?: false
