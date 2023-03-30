@@ -1,5 +1,6 @@
 package com.niqr.auth.ui.screens.authentication
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -17,11 +18,11 @@ internal fun NavGraphBuilder.authenticationScreen(
     onSuccessAuth: () -> Unit
 ) {
     composable(AuthenticationScreenRoutePattern) {
-//        val viewModel: AuthenticationViewModel = hiltViewModel()
+        val viewModel: AuthenticationViewModel = hiltViewModel()
         AuthenticationScreen(
-//            uiState = viewModel.uiState,
-//            uiEvent = viewModel.uiEvent,
-//            onAction = viewModel::onAction,
+            uiState = viewModel.uiState,
+            uiEvent = viewModel.uiEvent,
+            onAction = viewModel::onAction,
             onSuccess = onSuccessAuth
         )
     }
