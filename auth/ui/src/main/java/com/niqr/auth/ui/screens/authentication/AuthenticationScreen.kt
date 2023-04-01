@@ -1,13 +1,11 @@
 package com.niqr.auth.ui.screens.authentication
 
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.niqr.auth.ui.screens.authentication.components.*
 import com.niqr.auth.ui.screens.authentication.model.AuthenticationAction
 import com.niqr.auth.ui.screens.authentication.model.AuthenticationEvent
 import com.niqr.auth.ui.screens.authentication.model.AuthenticationUiState
@@ -21,30 +19,40 @@ internal fun AuthenticationScreen(
     onAction: (AuthenticationAction) -> Unit,
     onSuccess: () -> Unit
 ) {
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        onAction(AuthenticationAction.OnAuthResult(it))
-    }
+    AuthenticationUiEventHandler(
+        uiEvent = uiEvent,
+        onAction = onAction,
+        onSuccess = onSuccess
+    )
 
-    LaunchedEffect(Unit) {
-        uiEvent.collect {
-            when(it) {
-                is AuthenticationEvent.LaunchAuth -> {
-                    launcher.launch(it.intent)
-                }
-                AuthenticationEvent.OnAuthSuccess -> onSuccess()
-            }
-        }
-    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        AuthenticationHead()
 
-    Column {
-        Text("AuthenticationScreen")
-        Button(
-            onClick = {
-                Log.d("TAG", "11232321")
-                onAction(AuthenticationAction.OnAuthClick)
-            }
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .fillMaxSize()
         ) {
-            Text("SignIn")
+            Column(
+                modifier = Modifier
+                    .align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AuthenticationHeader()
+
+                Spacer(Modifier.height(24.dp))
+
+                SignInWithGoogleButton(
+                    onClick = {
+                        onAction(AuthenticationAction.OnAuthClick)
+                    }
+                )
+            }
+
+            AuthenticationPolicy()
         }
     }
 }
