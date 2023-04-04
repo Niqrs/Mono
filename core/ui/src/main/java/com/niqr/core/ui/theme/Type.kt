@@ -42,3 +42,13 @@ val Typography.hint: TextStyle
         fontSize = 13.sp,
         lineHeight = 20.sp
     )
+
+val Typography.task: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 22.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.4.sp
+    )
