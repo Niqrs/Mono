@@ -19,7 +19,7 @@ import com.niqr.tasks.ui.R
 fun TasksDialog(
     task: Task?,
     onDismiss: () -> Unit,
-    onSaveClick: () -> Unit
+    onSaveClick: (task: Task) -> Unit
 ) {
     var editTask by remember { mutableStateOf(task?.name ?: "") }
     LaunchedEffect(task) {
@@ -67,7 +67,9 @@ fun TasksDialog(
                             )
                         }
 
-                        TextButton(onSaveClick) {
+                        TextButton(
+                            onClick = { onSaveClick(Task(editTask, task.isDone)) }
+                        ) {
                             Text(
                                 text = stringResource(R.string.save),
                                 style = MaterialTheme.typography.bodyLarge,
