@@ -87,8 +87,10 @@ class TasksRepositoryImpl @Inject constructor(
     override fun updateTask(prevTask: Task, newTask: Task) {
         dayId?.let {
             val day = userDaysRef.document(it)
-            day.update("$TASKS.${prevTask.name}", FieldValue.delete())
-            day.update("$TASKS.${newTask.name}", newTask.isDone)
+            day.update(
+                "$TASKS.${prevTask.name}", FieldValue.delete(),
+                "$TASKS.${newTask.name}", newTask.isDone
+            )
         }
     }
 
