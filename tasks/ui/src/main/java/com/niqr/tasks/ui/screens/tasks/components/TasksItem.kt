@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.theme.task
+import com.niqr.core.ui.theme.taskDone
 import com.niqr.tasks.domain.model.Task
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -22,7 +23,7 @@ internal fun TasksItem(
     onLongClick: (task: Task) -> Unit
 ) {
     Text(
-        text = "${task.name}: ${task.isDone}",
+        text = task.name,
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
@@ -33,6 +34,8 @@ internal fun TasksItem(
             .padding(vertical = 10.dp),
         textAlign = TextAlign.Center,
         maxLines = 1,
-        style = MaterialTheme.typography.task
+        style = MaterialTheme.typography.let {
+            if (task.isDone) it.taskDone else it.task
+        }
     )
 }
