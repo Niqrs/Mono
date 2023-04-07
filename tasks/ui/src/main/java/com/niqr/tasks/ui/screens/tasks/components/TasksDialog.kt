@@ -6,8 +6,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.niqr.core.ui.components.AnimatedCounter
 import com.niqr.core.ui.theme.task
@@ -21,12 +25,22 @@ fun TasksDialog(
     onDismiss: () -> Unit,
     onSaveClick: (task: Task) -> Unit
 ) {
-    var editTask by remember { mutableStateOf(task?.name ?: "") }
+    var editTask by remember {
+        val text = task?.name ?: ""
+        mutableStateOf(TextFieldValue(text, TextRange(text.length)))
+    }
+    val focusRequester = remember { FocusRequester() }
+
     LaunchedEffect(task) {
-        editTask = task?.name ?: ""
+        val text = task?.name ?: ""
+        editTask = TextFieldValue(text, TextRange(text.length))
     }
 
     if (task != null) {
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
+
         AlertDialog(
             onDismissRequest = onDismiss,
         ) {
@@ -34,20 +48,22 @@ fun TasksDialog(
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentHeight(),
-                shape = MaterialTheme.shapes.large
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colorScheme.surfaceVariant
             ) {
                 Column(
                     modifier = Modifier
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AnimatedCounter(count = 50 - editTask.length)
+                    AnimatedCounter(count = 50 - editTask.text.length)
                     Spacer(Modifier.height(8.dp))
 
                     BasicTextField(
                         value = editTask,
-                        onValueChange = { if (it.length <= 50) editTask = it },
+                        onValueChange = { if (it.text.length <= 50) editTask = it },
                         modifier = Modifier
+                            .focusRequester(focusRequester)
                             .padding(vertical = 12.dp)
                             .fillMaxWidth(),
                         textStyle = MaterialTheme.typography.task,
@@ -68,7 +84,7 @@ fun TasksDialog(
                         }
 
                         TextButton(
-                            onClick = { onSaveClick(Task(editTask, task.isDone)) }
+                            onClick = { onSaveClick(Task(editTask.text, task.isDone)) }
                         ) {
                             Text(
                                 text = stringResource(R.string.save),
