@@ -1,5 +1,5 @@
 package com.niqr.settings.domain
 
 interface SettingsRepository {
-    suspend fun sighOut(): Boolean
+    suspend fun signOut(): Boolean
 }
