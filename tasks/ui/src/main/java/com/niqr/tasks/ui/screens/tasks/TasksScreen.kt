@@ -39,9 +39,18 @@ internal fun TasksScreen(
         onSaveClick = { onAction(TasksAction.OnUpdateTaskClick(uiState.editTask ?: Task(), it)) }
     )
 
+    SettingsMenu(
+        expanded = uiState.isSettingsMenuVisible,
+        onDismissRequest = { onAction(TasksAction.OnDismissSettingsMenu) },
+        onSignOutClick = { onAction(TasksAction.OnSighOutClick) }
+    )
+
     Scaffold(
         topBar = {
-            TasksTopAppBar(uiState.day, {})
+            TasksTopAppBar(
+                day = uiState.day,
+                onSettingsClick = { onAction(TasksAction.OnSettingsClick) }
+            )
         },
         bottomBar = {
             TasksBottomAppBar(

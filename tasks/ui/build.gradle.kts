@@ -10,4 +10,5 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":tasks:domain"))
+    implementation(project(":settings:domain"))
 }
