@@ -12,5 +12,4 @@ interface TasksRepository {
     fun updateTaskValue(task: Task)
     fun updateTask(prevTask: Task, newTask: Task)
     fun deleteTask(task: String)
-    suspend fun signOut(): Boolean
 }
