@@ -55,6 +55,7 @@ internal class TasksViewModel @Inject constructor(
             is TasksAction.OnUpdateTaskValueClick -> onUpdateTaskValueClick(action.task)
             is TasksAction.OnUpdateTaskClick -> onUpdateTaskClick(action.prevTask, action.newTask)
             is TasksAction.OnEditTaskClick -> onEditTaskClick(action.task)
+            is TasksAction.OnDeleteTaskClick -> onDeleteTaskClick(action.task)
             TasksAction.OnDismissEditTask -> onDismissEditTask()
             TasksAction.OnSettingsClick -> onSettingsClick()
             TasksAction.OnDismissSettingsMenu -> onDismissSettingsMenu()
@@ -122,6 +123,11 @@ internal class TasksViewModel @Inject constructor(
         uiState = uiState.copy(
             editTask = task
         )
+    }
+
+    private fun onDeleteTaskClick(task: Task) {
+        uiState = uiState.copy(editTask = null)
+        repo.deleteTask(task.name)
     }
 
     private fun onDismissEditTask() {

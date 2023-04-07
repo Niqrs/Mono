@@ -36,7 +36,8 @@ internal fun TasksScreen(
     TasksDialog(
         task = uiState.editTask,
         onDismiss = { onAction(TasksAction.OnDismissEditTask) },
-        onSaveClick = { onAction(TasksAction.OnUpdateTaskClick(uiState.editTask ?: Task(), it)) }
+        onSaveClick = { onAction(TasksAction.OnUpdateTaskClick(uiState.editTask ?: Task(), it)) },
+        onDeleteClick = { onAction(TasksAction.OnDeleteTaskClick(it)) }
     )
 
     SettingsMenu(

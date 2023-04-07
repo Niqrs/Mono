@@ -10,6 +10,7 @@ internal sealed class TasksAction {
     data class OnAddTaskClick(val task: String): TasksAction()
     data class OnUpdateTaskValueClick(val task: Task): TasksAction()
     data class OnUpdateTaskClick(val prevTask: Task, val newTask: Task): TasksAction()
+    data class OnDeleteTaskClick(val task: Task): TasksAction()
     data class OnEditTaskClick(val task: Task): TasksAction()
     object OnDismissEditTask: TasksAction()
     object OnSettingsClick: TasksAction()

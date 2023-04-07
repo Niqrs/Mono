@@ -23,7 +23,8 @@ import com.niqr.tasks.ui.R
 fun TasksDialog(
     task: Task?,
     onDismiss: () -> Unit,
-    onSaveClick: (task: Task) -> Unit
+    onSaveClick: (task: Task) -> Unit,
+    onDeleteClick: (task: Task) -> Unit
 ) {
     var editTask by remember {
         val text = task?.name ?: ""
@@ -73,24 +74,39 @@ fun TasksDialog(
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        TextButton(onDismiss) {
-                            Text(
-                                text = stringResource(R.string.cancel),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                        }
+                        if (task.name.isBlank())
+                            Spacer(Modifier.width(1.dp))
+                        else
+                            TextButton(
+                                onClick = { onDeleteClick(task) }
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.delete),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
 
-                        TextButton(
-                            onClick = { onSaveClick(Task(editTask.text, task.isDone)) }
-                        ) {
-                            Text(
-                                text = stringResource(R.string.save),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
+                        Row {
+                            TextButton(onDismiss) {
+                                Text(
+                                    text = stringResource(R.string.cancel),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
+
+                            TextButton(
+                                onClick = { onSaveClick(Task(editTask.text, task.isDone)) }
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.save),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
                         }
                     }
                 }
