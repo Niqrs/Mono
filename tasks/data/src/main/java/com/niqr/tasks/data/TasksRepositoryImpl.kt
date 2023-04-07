@@ -1,6 +1,5 @@
 package com.niqr.tasks.data
 
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,9 +24,8 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 class TasksRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth, //TODO: auth should not be here
-    private val db: FirebaseFirestore,
-    private val googleClient: GoogleSignInClient
+    auth: FirebaseAuth,
+    db: FirebaseFirestore
 ): TasksRepository {
     private val uid = auth.currentUser?.uid ?: ""
     private val userRef = db.collection(USERS).document(uid)
@@ -98,16 +96,6 @@ class TasksRepositoryImpl @Inject constructor(
         dayId?.let {
             val day = userDaysRef.document(it)
             day.update("$TASKS.$task", FieldValue.delete())
-        }
-    }
-
-    override suspend fun signOut(): Boolean {
-        return try {
-            googleClient.signOut().await()
-            auth.signOut()
-            true
-        } catch (e: Exception) {
-            false
         }
     }
 
