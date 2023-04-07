@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.niqr.settings.domain.SettingsRepository
 import com.niqr.tasks.domain.TasksRepository
 import com.niqr.tasks.domain.model.Task
 import com.niqr.tasks.ui.screens.tasks.model.TasksAction
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TasksViewModel @Inject constructor(
-    private val repo: TasksRepository
+    private val repo: TasksRepository,
+    private val settings: SettingsRepository
 ): ViewModel() {
     private var day: LocalDate = LocalDate.now()
 
@@ -54,18 +56,31 @@ internal class TasksViewModel @Inject constructor(
             is TasksAction.OnUpdateTaskClick -> onUpdateTaskClick(action.prevTask, action.newTask)
             is TasksAction.OnEditTaskClick -> onEditTaskClick(action.task)
             TasksAction.OnDismissEditTask -> onDismissEditTask()
+            TasksAction.OnSettingsClick -> onSettingsClick()
+            TasksAction.OnDismissSettingsMenu -> onDismissSettingsMenu()
         }
+    }
+
+    private fun onDismissSettingsMenu() {
+        uiState = uiState.copy(
+            isSettingsMenuVisible = false
+        )
+    }
+
+    private fun onSettingsClick() {
+        uiState = uiState.copy(
+            isSettingsMenuVisible = true
+        )
     }
 
     private fun onSighOutClick() {
         viewModelScope.launch {
-            val isSuccess = repo.signOut()
+            val isSuccess = settings.signOut()
             if (isSuccess)
                 _uiEvent.send(TasksEvent.SignOut)
 
             uiState = uiState.copy(
-                // itLoading = false
-                // isError = !isSuccess
+                isSettingsMenuVisible = false
             )
         }
     }
