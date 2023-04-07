@@ -1,6 +1,5 @@
 package com.niqr.tasks.data.di
 
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.niqr.tasks.data.TasksRepositoryImpl
@@ -17,7 +16,6 @@ object TasksDataModule {
     @Provides
     fun provideTasksRepository(
         db: FirebaseFirestore,
-        auth: FirebaseAuth,
-        googleClient: GoogleSignInClient
-    ): TasksRepository = TasksRepositoryImpl(auth, db, googleClient)
+        auth: FirebaseAuth
+    ): TasksRepository = TasksRepositoryImpl(auth, db)
 }
